@@ -1,4 +1,4 @@
-FROM alpine:3.22.1@sha256:4bcff63911fcb4448bd4fdacec207030997caf25e9bea4045fa6c8c44de311d1 AS buildenv
+FROM alpine:3.22.2@sha256:4b7ce07002c69e8f3d704a9c5d6fd3053be500b7f1c69fc0d80990c2ad8dd412 AS buildenv
 
 ENV SOURCE_URL=https://ixpeering.dl.sourceforge.net/project/iperf2/iperf-2.2.1.tar.gz \
     SOURCE_SHA1SUM=9b30b1f3140d4f714555fee5ed21aa2bf4046aee
@@ -14,7 +14,7 @@ RUN apk --no-cache add tar build-base \
     && make \
     && make install
 
-FROM alpine:3.22.1@sha256:4bcff63911fcb4448bd4fdacec207030997caf25e9bea4045fa6c8c44de311d1
+FROM alpine:3.22.2@sha256:4b7ce07002c69e8f3d704a9c5d6fd3053be500b7f1c69fc0d80990c2ad8dd412
 
 # Copy relevant compiled files to distribution image
 RUN adduser --system iperf2 \
