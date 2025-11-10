@@ -1,15 +1,15 @@
 FROM alpine:3.22.2@sha256:4b7ce07002c69e8f3d704a9c5d6fd3053be500b7f1c69fc0d80990c2ad8dd412 AS buildenv
 
-ENV SOURCE_URL=https://ixpeering.dl.sourceforge.net/project/iperf2/iperf-2.2.1.tar.gz \
-    SOURCE_SHA1SUM=9b30b1f3140d4f714555fee5ed21aa2bf4046aee
+ENV SOURCE_URL=https://downloads.sourceforge.net/project/iperf2/iperf-2.2.1.tar.gz \
+    SOURCE_SHA256SUM=5f42447763e4f42ed1242abe3249289b4b423254c47afee16f2356896631bdc8
 
 # Download source file, extract and compile
 WORKDIR /iperf2
+COPY iperf-2.2.1.tar /iperf2/
 RUN apk --no-cache add tar build-base \
-    && wget "$SOURCE_URL" \
-    && echo "${SOURCE_SHA1SUM}  $(ls *.tar.gz)" > iperf2.sha1 \
-    && sha1sum -c iperf2.sha1 \
-    && for tarfile in *.tar.gz; do tar -xz --strip-components=1 --file="$tarfile"; done \
+    && echo "${SOURCE_SHA256SUM}  $(ls *.tar)" > iperf2.sha256 \
+    && sha256sum -c iperf2.sha256 \
+    && for tarfile in *.tar; do tar -x --strip-components=1 --file="$tarfile"; done \
     && ./configure \
     && make \
     && make install
